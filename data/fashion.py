@@ -1,0 +1,68 @@
+"""
+This code is based on the Torchvision repository, which was licensed under the BSD 3-Clause.
+"""
+import os
+import sys
+import numpy as np
+import torch
+from PIL import Image
+from torch.utils.data import Dataset
+from utils.mypath import MyPath
+from torchvision.datasets.utils import check_integrity, download_and_extract_archive
+import pandas as pd
+import torchvision.transforms as transforms
+
+
+class Fashion(Dataset):
+    """User defined class to build a datset using Pytorch class Dataset."""
+
+    def __init__(self, train=True, transform=None):
+        """Method to initilaize variables."""
+
+        self.train = train
+        self.transform = transform
+
+        if self.train:
+            train_csv = pd.read_csv("FashionMNIST/FashionMNIST/csv/fashion-mnist_train.csv")
+            self.fashion_MNIST = list(train_csv.values)
+        else:
+            test_csv = pd.read_csv("FashionMNIST/FashionMNIST/csv/fashion-mnist_test.csv")
+            self.fashion_MNIST = list(test_csv.values)
+
+        label = []
+        image = []
+
+        for i in self.fashion_MNIST:
+            # first column is of labels.
+            label.append(i[0])
+            image.append(i[1:])
+        self.labels = np.asarray(label)
+        # Dimension of Images = 28 * 28 * 1. where height = width = 28 and color_channels = 1.
+        self.images = np.asarray(image).reshape(-1, 28, 28).astype('uint8')
+
+    def __getitem__(self, index):
+        label = self.labels[index]
+        image = self.images[index]
+
+        #Return a PIL image
+        image = Image.fromarray(image)
+        img_size = image.size
+
+        if self.transform is not None:
+            image = self.transform(image)
+
+        out = {'image': image, 'target': label, 'meta': {'im_size': img_size, 'index': index}}
+
+        return out
+
+    def __len__(self):
+        return len(self.images)
+
+transforms = transforms.Compose([transforms.RandomResizedCrop(28, scale=(0.2, 1.0)), transforms.RandomHorizontalFlip(),
+                                 transforms.RandomGrayscale(0.2),
+                                 transforms.ToTensor(),
+                                 transforms.Normalize((0.5,),(0.5,))
+                                 ])
+
+train_set = Fashion(train=True, transform=transforms)
+print(train_set.__getitem__(2)["image"])
