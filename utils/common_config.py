@@ -141,6 +141,10 @@ def get_train_dataset(p, transform, to_augmented_dataset=False,
         subset_file = './data/imagenet_subsets/%s.txt' %(p['train_db_name'])
         dataset = ImageNetSubset(subset_file=subset_file, split='train', transform=transform)
 
+    elif p['train_db_name'] == 'fashion_mnist':
+        from data.fashion import Fashion
+        dataset = Fashion(train=True, transform=transform)
+
     else:
         raise ValueError('Invalid train dataset {}'.format(p['train_db_name']))
     
@@ -179,7 +183,11 @@ def get_val_dataset(p, transform=None, to_neighbors_dataset=False):
         from data.imagenet import ImageNetSubset
         subset_file = './data/imagenet_subsets/%s.txt' %(p['val_db_name'])
         dataset = ImageNetSubset(subset_file=subset_file, split='val', transform=transform)
-    
+
+    elif p['train_db_name'] == 'fashion_mnist':
+        from data.fashion import Fashion
+        dataset = Fashion(train=False, transform=transform)
+
     else:
         raise ValueError('Invalid validation dataset {}'.format(p['val_db_name']))
     
@@ -239,7 +247,17 @@ def get_train_transformations(p):
                 n_holes = p['augmentation_kwargs']['cutout_kwargs']['n_holes'],
                 length = p['augmentation_kwargs']['cutout_kwargs']['length'],
                 random = p['augmentation_kwargs']['cutout_kwargs']['random'])])
-    
+
+    elif p['augmentation_strategy'] == 'fashion_clr':
+        # Augmentation strategy from the SimCLR paper adjusted for GrayScale images
+        return transforms.Compose([
+            transforms.RandomResizedCrop(**p['augmentation_kwargs']['random_resized_crop']),
+            transforms.RandomHorizontalFlip(),
+            transforms.RandomGrayscale(**p['augmentation_kwargs']['random_grayscale']),
+            transforms.ToTensor(),
+            transforms.Normalize(**p['augmentation_kwargs']['normalize'])
+        ])
+
     else:
         raise ValueError('Invalid augmentation strategy {}'.format(p['augmentation_strategy']))
 
