@@ -57,12 +57,3 @@ class Fashion(Dataset):
 
     def __len__(self):
         return len(self.images)
-
-transforms = transforms.Compose([transforms.RandomResizedCrop(28, scale=(0.2, 1.0)), transforms.RandomHorizontalFlip(),
-                                 transforms.RandomGrayscale(0.2),
-                                 transforms.ToTensor(),
-                                 transforms.Normalize((0.5,),(0.5,))
-                                 ])
-
-train_set = Fashion(train=True, transform=transforms)
-print(train_set.__getitem__(2)["image"])
