@@ -46,5 +46,5 @@ augmentation_kwargs:
 transformation_kwargs:
    crop_size: 28
    normalize:
-      mean: [0.5,]
-      std: [0.5,]
+      mean: [0.5]
+      std: [0.5]
