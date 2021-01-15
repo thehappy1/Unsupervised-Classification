@@ -188,7 +188,7 @@ def get_val_dataset(p, transform=None, to_neighbors_dataset=False):
         subset_file = './data/imagenet_subsets/%s.txt' %(p['val_db_name'])
         dataset = ImageNetSubset(subset_file=subset_file, split='val', transform=transform)
 
-    elif p['train_db_name'] == 'fashion_mnist':
+    elif p['val_db_name'] == 'fashion-mnist':
         from data.fashion import Fashion
         dataset = Fashion(train=False, transform=transform)
 
