@@ -148,7 +148,6 @@ def get_train_dataset(p, transform, to_augmented_dataset=False,
     elif p['train_db_name'] == 'fashion-mnist':
         from data.fashion import Fashion
         dataset = Fashion(train=True, transform=transform)
-        print(dataset.__getitem__(2)["image"])
 
     else:
         raise ValueError('Invalid train dataset {}'.format(p['train_db_name']))
