@@ -1,16 +1,10 @@
 """
 This code is based on the Torchvision repository, which was licensed under the BSD 3-Clause.
 """
-import os
-import sys
 import numpy as np
-import torch
 from PIL import Image
 from torch.utils.data import Dataset
-from utils.mypath import MyPath
-from torchvision.datasets.utils import check_integrity, download_and_extract_archive
 import pandas as pd
-import torchvision.transforms as transforms
 
 
 class Fashion(Dataset):
@@ -37,8 +31,12 @@ class Fashion(Dataset):
             label.append(i[0])
             image.append(i[1:])
         self.labels = np.asarray(label)
+
         # Dimension of Images = 28 * 28 * 1. where height = width = 28 and color_channels = 1.
         self.images = np.asarray(image).reshape(-1, 28, 28).astype('uint8')
+
+        #repeat values of the 1-dimensional image 3 times to get rgb format
+        self.images = np.repeat(self.images[..., np.newaxis], 3, -1)
 
     def __getitem__(self, index):
         label = self.labels[index]
