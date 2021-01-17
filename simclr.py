@@ -53,7 +53,8 @@ def main():
     print('Validation transforms:', val_transforms)
     train_dataset = get_train_dataset(p, train_transforms, to_augmented_dataset=True,
                                         split='train+unlabeled') # Split is for stl-10
-    print("Shape: ", train_dataset.__getitem__(2)["image"].shape)
+    print("XXXXXXXXXXXXXXXXXXXX-----XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX")
+    print("Shape: ", train_dataset.__getitem__(2)["image"].is_cuda)
     val_dataset = get_val_dataset(p, val_transforms) 
     train_dataloader = get_train_dataloader(p, train_dataset)
     val_dataloader = get_val_dataloader(p, val_dataset)
