@@ -155,7 +155,7 @@ def get_train_dataset(p, transform, to_augmented_dataset=False,
 
     elif p['train_db_name'] == 'fpi':
         from data.fpidataset import Fpidataset
-        dataset = Fpidataset(train=True, transform=transform)
+        dataset = Fpidataset(train=True, img_size=(60,80), transform=transform)
 
     else:
         raise ValueError('Invalid train dataset {}'.format(p['train_db_name']))
@@ -202,7 +202,7 @@ def get_val_dataset(p, transform=None, to_neighbors_dataset=False):
 
     elif p['val_db_name'] == 'fpi':
         from data.fpidataset import Fpidataset
-        dataset = Fpidataset(train=False, transform=transform)
+        dataset = Fpidataset(train=False, img_size=(60,80), transform=transform)
 
     else:
         raise ValueError('Invalid validation dataset {}'.format(p['val_db_name']))
