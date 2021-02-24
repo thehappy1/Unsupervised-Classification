@@ -149,6 +149,10 @@ def get_train_dataset(p, transform, to_augmented_dataset=False,
         from data.fashion import Fashion
         dataset = Fashion(train=True, transform=transform)
 
+    elif p['train_db_name'] == 'fpi':
+        from data.fpidataset import Fpidataset
+        dataset = Fpidataset(train=True, transform=transform)
+
     else:
         raise ValueError('Invalid train dataset {}'.format(p['train_db_name']))
     
@@ -191,6 +195,10 @@ def get_val_dataset(p, transform=None, to_neighbors_dataset=False):
     elif p['val_db_name'] == 'fashion-mnist':
         from data.fashion import Fashion
         dataset = Fashion(train=False, transform=transform)
+
+    elif p['val_db_name'] == 'fpi':
+        from data.fpidataset import Fpidataset
+        dataset = Fpidataset(train=False, transform=transform)
 
     else:
         raise ValueError('Invalid validation dataset {}'.format(p['val_db_name']))
