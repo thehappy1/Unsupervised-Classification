@@ -44,8 +44,9 @@ class Fpidataset(Dataset):
         #open as PIL Image
         img = Image.open(img_path).convert('RGB')
 
-        #transform
-        image = self.transform(img)
+        # transform
+        if self.transform is not None:
+            image = self.transform(img)
 
         #get label
         label = self.df.targets[idx]
