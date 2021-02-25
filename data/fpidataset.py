@@ -7,18 +7,13 @@ from torchvision import transforms
 
 class Fpidataset(Dataset):
     # Constructor
-    def __init__(self, train, img_size, transform):
+    def __init__(self, train=True, img_size=(80,60), transform=None):
 
         self.img_size = img_size
         self.train = train
 
         self.transform = transform
-
-        if transform is None:
-            self.transform = torchvision.transforms.Compose([
-                torchvision.transforms.Resize((img_size,img_size)),
-                torchvision.transforms.ToTensor()
-            ])
+        print("transform: ", transform)
 
         df = pd.read_csv('data/styles.csv', error_bad_lines=False)
         #/media/sda/fschmedes/Contrastive-Clustering/
@@ -49,7 +44,6 @@ class Fpidataset(Dataset):
         #open as PIL Image
         img = Image.open(img_path).convert('RGB')
 
-        print("transform: ", self.transform)
         #transform
         image = self.transform(img)
 
