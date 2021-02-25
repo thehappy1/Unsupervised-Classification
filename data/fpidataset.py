@@ -30,6 +30,7 @@ class Fpidataset():
         return len(self.df)
 
     def __getitem__(self, index):
+        print(index)
         label = self.labels[index]
         image = self.images[index]
 
