@@ -12,7 +12,7 @@ class Fpidataset(Dataset):
         self.img_size = img_size
         self.train = train
 
-        if transform is None:
+        if transform is not None:
             transform = torchvision.transforms.Compose([
                 torchvision.transforms.Resize((img_size,img_size)),
                 torchvision.transforms.ToTensor()
@@ -47,9 +47,6 @@ class Fpidataset(Dataset):
 
         #open as PIL Image
         img = Image.open(img_path).convert('RGB')
-        print("Problem bei: ", img, " mit dem path: ", img_path)
-
-        image = transforms.Resize((60,60))
 
         #transform
         image = self.transform(img)
