@@ -47,6 +47,9 @@ class Fpidataset(Dataset):
         # transform
         if self.transform is not None:
             image = self.transform(img)
+        else:
+            print("transforms: ",transforms)
+            image = img
 
         #get label
         label = self.df.targets[idx]
