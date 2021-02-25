@@ -48,6 +48,7 @@ class Fpidataset(Dataset):
         #open as PIL Image
         img = Image.open(img_path).convert('RGB')
 
+        print("transform: ", self.transform)
         #transform
         image = self.transform(img)
 
