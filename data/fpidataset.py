@@ -1,78 +1,88 @@
-from PIL import Image
-from torch.utils.data import Dataset
-import torchvision
 import os
 import pandas as pd
-from torchvision import transforms
+from PIL import Image
 
-class Fpidataset(Dataset):
+class Fpidataset():
     # Constructor
-    def __init__(self, train=True, img_size=(80,60), transform=None):
+    def __init__(self, train=True, transform=None):
 
-        self.img_size = img_size
         self.train = train
-
         self.transform = transform
-        print("transform: ", transform)
 
-        df = pd.read_csv('data/styles.csv', error_bad_lines=False)
-        #/media/sda/fschmedes/Contrastive-Clustering/
-        df['image_path'] = df.apply(lambda x: os.path.join("data/images", str(x.id) + ".jpg"), axis=1)
-        df = df.drop([32309, 40000, 36381, 16194, 6695]) #drop rows with no image
+        self.df = pd.read_csv('data/styles.csv', error_bad_lines=False)
+        self.df['image_path'] = self.df.apply(lambda x: os.path.join("data/images", str(x.id) + ".jpg"), axis=1)
+        self.df = self.df.drop([32309, 40000, 36381, 16194, 6695])
 
-        # map articleType as number
+        #map articleType as number
         mapper = {}
-        for i, cat in enumerate(list(df.articleType.unique())):
+        for i, cat in enumerate(list(self.df.articleType.unique())):
             mapper[cat] = i
         print(mapper)
-        df['targets'] = df.articleType.map(mapper)
+        self.df['targets'] = self.df.articleType.map(mapper)
+        print(self.df.head(100))
 
         if self.train:
-            self.df = get_i_items(df,0, 800)
+            self.images, self.labels = self.get_i_items(self.df, 800, train=True)
         else:
-            self.df = get_i_items(df,800, 1000)
+            self.images, self.labels = self.get_i_items(self.df, 200, train=False)
 
-    # Get the length
     def __len__(self):
         return len(self.df)
 
-    # Getter
-    def __getitem__(self, idx):
-        #get imagepath
-        img_path = self.df.image_path[idx]
+    def __getitem__(self, index):
+        label = self.labels[index]
+        image = self.images[index]
 
-        #open as PIL Image
-        img = Image.open(img_path).convert('RGB')
+        img_size = image.size
 
         # transform
         if self.transform is not None:
-            image = self.transform(img)
+            image = self.transform(image)
+
+        out = {'image': image, 'target': label, 'meta': {'im_size': img_size, 'index': index}}
+
+        return out
+
+    def get_i_items(self, df, number_of_items, train):
+        # get i items of each target
+
+        # calculate classes with more than 1000 items
+        temp = df.targets.value_counts().sort_values(ascending=False)[:10].index.tolist()
+        df_temp = df[df["targets"].isin(temp)]
+
+        images = []
+        labels = []
+
+        if train:
+            for label in temp:
+
+                train_temp = df_temp[df_temp.targets == label]
+                train_temp = train_temp[:number_of_items]
+
+                labels.extend(train_temp["targets"].to_list())
+
+                for element in train_temp.image_path:
+                    img = Image.open(element)
+                    img = img.resize((60,80))
+                    images.append(img)
+
+                print("Anzahl x_train items bei ", label, " :", len(images))
+                print(" ")
         else:
-            print("transforms: ",transforms)
-            image = img
+            for label in temp:
 
-        #get label
-        label = self.df.targets[idx]
+                test_temp = df_temp[df_temp.targets == label]
+                test_temp = test_temp[800:1000]
 
-        return image, label
+                labels.extend(test_temp["targets"].to_list())
 
+                for element in test_temp.image_path:
+                    img = Image.open(element)
+                    img = img.resize((60, 80))
+                    images.append(img)
 
-def get_i_items(df, start, stop):
-    # get i items of each condition
+                print("Anzahl x_test items bei ", label, " :", len(images))
+                print(" ")
 
-    # calculate classes with more than 1000 items
-    temp = df.targets.value_counts().sort_values(ascending=False)[:10].index.tolist()
-    df_temp = df[df["targets"].isin(temp)]
+        return images, labels
 
-    #generate new empty dataframe with the columns of the original
-    dataframe = df[:0]
-
-    #for each targetclass in temp insert i items in dataframe
-
-    for label in temp:
-        #print("Füge Items mit target", label, "ein.")
-        dataframe = dataframe.append(df_temp[df_temp.targets == label][start:stop])
-        #print("Anzahl items", len(dataframe))
-
-    dataframe = dataframe.reset_index()
-    return dataframe
