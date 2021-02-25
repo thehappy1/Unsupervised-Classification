@@ -13,11 +13,10 @@ class Fpidataset(Dataset):
         self.train = train
 
         if transform is not None:
-            transform = torchvision.transforms.Compose([
+            self.transform = torchvision.transforms.Compose([
                 torchvision.transforms.Resize((img_size,img_size)),
                 torchvision.transforms.ToTensor()
             ])
-        self.transform = transform
 
         df = pd.read_csv('data/styles.csv', error_bad_lines=False)
         #/media/sda/fschmedes/Contrastive-Clustering/
