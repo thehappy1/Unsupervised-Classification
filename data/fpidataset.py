@@ -3,6 +3,7 @@ from torch.utils.data import Dataset
 import torchvision
 import os
 import pandas as pd
+from torchvision import transforms
 
 class Fpidataset(Dataset):
     # Constructor
@@ -47,6 +48,8 @@ class Fpidataset(Dataset):
         #open as PIL Image
         img = Image.open(img_path).convert('RGB')
         print("Problem bei: ", img, " mit dem path: ", img_path)
+
+        image = transforms.Resize((60,60))
 
         #transform
         image = self.transform(img)
