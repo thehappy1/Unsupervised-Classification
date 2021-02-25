@@ -14,7 +14,7 @@ class Fpidataset(Dataset):
 
         if transform is None:
             transform = torchvision.transforms.Compose([
-                torchvision.transforms.Resize((80,60)),
+                torchvision.transforms.Resize((img_size,img_size)),
                 torchvision.transforms.ToTensor()
             ])
         self.transform = transform
