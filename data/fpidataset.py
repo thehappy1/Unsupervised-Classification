@@ -46,7 +46,7 @@ class Fpidataset(Dataset):
 
         #open as PIL Image
         img = Image.open(img_path).convert('RGB')
-        print(img)
+        print("Problem bei: ", img, " mit dem path: ", img_path)
 
         #transform
         image = self.transform(img)
