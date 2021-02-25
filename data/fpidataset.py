@@ -8,7 +8,6 @@ class Fpidataset(Dataset):
     # Constructor
     def __init__(self, train, img_size, transform):
 
-        self.transform = transform
         self.img_size = img_size
         self.train = train
 
@@ -47,6 +46,7 @@ class Fpidataset(Dataset):
 
         #open as PIL Image
         img = Image.open(img_path).convert('RGB')
+        print(img)
 
         #transform
         image = self.transform(img)
