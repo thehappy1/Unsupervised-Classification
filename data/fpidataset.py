@@ -6,11 +6,22 @@ import pandas as pd
 
 class Fpidataset(Dataset):
     # Constructor
-    def __init__(self, train=True, transform=None):
+    def __init__(self, train=True, transforms=None):
 
-        self.transform = transform
+        if transforms is None:
+            transforms.Compose([
+                transforms.RandomResizedCrop(**p['augmentation_kwargs']['random_resized_crop']),
+                transforms.RandomHorizontalFlip(),
+                transforms.RandomApply([
+                    transforms.ColorJitter(**p['augmentation_kwargs']['color_jitter'])
+                ], p=p['augmentation_kwargs']['color_jitter_random_apply']['p']),
+                transforms.RandomGrayscale(**p['augmentation_kwargs']['random_grayscale']),
+                transforms.ToTensor(),
+                transforms.Normalize(**p['augmentation_kwargs']['normalize'])
+            ])
+
         self.train = train
-        self.transform = transform
+        self.transform = transforms
         print("transform -------------------------------: ", self.transform)
 
         df = pd.read_csv('data/styles.csv', error_bad_lines=False)
