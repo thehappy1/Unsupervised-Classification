@@ -71,4 +71,7 @@ def get_i_items(df, start, stop):
         #print("Anzahl items", len(dataframe))
 
     dataframe = dataframe.reset_index()
+    print("vorher: ", dataframe.targets.head(10))
+    dataframe["targets"] = dataframe.targets.factorize
+    print("nachher: ", dataframe.targets.head(10))
     return dataframe
