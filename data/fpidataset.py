@@ -1,6 +1,5 @@
 from PIL import Image
 from torch.utils.data import Dataset
-import torchvision
 import os
 import pandas as pd
 
@@ -16,6 +15,9 @@ class Fpidataset(Dataset):
         df['image_path'] = df.apply(lambda x: os.path.join("data/images", str(x.id) + ".jpg"), axis=1)
         df = df.drop([32309, 40000, 36381, 16194, 6695]) #drop rows with no image
 
+        temp = df.articleType.value_counts().sort_values(ascending=False)[:10].index.tolist()
+        df = df[df["articleType"].isin(temp)]
+
         # map articleType as number
         mapper = {}
         for i, cat in enumerate(list(df.articleType.unique())):
@@ -23,10 +25,11 @@ class Fpidataset(Dataset):
         print(mapper)
         df['targets'] = df.articleType.map(mapper)
 
+
         if self.train:
-            self.df = get_i_items(df,0, 800)
+            self.df = get_i_items(df,temp,0, 800)
         else:
-            self.df = get_i_items(df,800, 1000)
+            self.df = get_i_items(df,temp,800, 1000)
 
     # Get the length
     def __len__(self):
@@ -53,12 +56,11 @@ class Fpidataset(Dataset):
         return out
 
 
-def get_i_items(df, start, stop):
+def get_i_items(df, temp, start, stop):
     # get i items of each condition
 
     # calculate classes with more than 1000 items
-    temp = df.targets.value_counts().sort_values(ascending=False)[:10].index.tolist()
-    df_temp = df[df["targets"].isin(temp)]
+    print(df.articleType.value_counts().head(10))
 
     #generate new empty dataframe with the columns of the original
     dataframe = df[:0]
@@ -67,11 +69,9 @@ def get_i_items(df, start, stop):
 
     for label in temp:
         #print("Füge Items mit target", label, "ein.")
-        dataframe = dataframe.append(df_temp[df_temp.targets == label][start:stop])
+        dataframe = dataframe.append(df[df.articleType == label][start:stop])
         #print("Anzahl items", len(dataframe))
 
     dataframe = dataframe.reset_index()
-    print("vorher: ", dataframe.targets.head(10))
-    dataframe["targets"] = pd.factorize[dataframe["targets"]]
-    print("nachher: ", dataframe.targets.head(10))
+
     return dataframe
