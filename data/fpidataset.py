@@ -38,7 +38,7 @@ class Fpidataset(Dataset):
         img_path = self.df.image_path[idx]
 
         #open as PIL Image
-        img = Image.open(img_path).convert('RGB')
+        image = Image.open(img_path).convert('RGB')
 
         #transform
         if self.transform is not None:
