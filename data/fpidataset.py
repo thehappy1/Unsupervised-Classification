@@ -8,21 +8,8 @@ class Fpidataset(Dataset):
     # Constructor
     def __init__(self, train=True, transforms=None):
 
-        if transforms is None:
-            transforms.Compose([
-                transforms.RandomResizedCrop(**p['augmentation_kwargs']['random_resized_crop']),
-                transforms.RandomHorizontalFlip(),
-                transforms.RandomApply([
-                    transforms.ColorJitter(**p['augmentation_kwargs']['color_jitter'])
-                ], p=p['augmentation_kwargs']['color_jitter_random_apply']['p']),
-                transforms.RandomGrayscale(**p['augmentation_kwargs']['random_grayscale']),
-                transforms.ToTensor(),
-                transforms.Normalize(**p['augmentation_kwargs']['normalize'])
-            ])
-
         self.train = train
         self.transform = transforms
-        print("transform -------------------------------: ", self.transform)
 
         df = pd.read_csv('data/styles.csv', error_bad_lines=False)
         #/media/sda/fschmedes/Contrastive-Clustering/
@@ -53,13 +40,9 @@ class Fpidataset(Dataset):
         #open as PIL Image
         img = Image.open(img_path).convert('RGB')
 
-        if img is None:
-            print("image: ", img_path, " is none!!!!!!!!!!!!!!!     with image: ", img)
-
-        if self.transform is None:
-            print("transform: ", self.transform, " is none!!!!!!!!!!")
         #transform
-        image = self.transform(img)
+        if self.transform is not None:
+            image = self.transform(img)
 
         #get label
         label = self.df.targets[idx]
