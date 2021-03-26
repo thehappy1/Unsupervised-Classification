@@ -72,6 +72,6 @@ def get_i_items(df, start, stop):
 
     dataframe = dataframe.reset_index()
     print("vorher: ", dataframe.targets.head(10))
-    dataframe["targets"] = dataframe.targets.factorize
+    dataframe["targets"] = pd.factorize[dataframe.targets]
     print("nachher: ", dataframe.targets.head(10))
     return dataframe
