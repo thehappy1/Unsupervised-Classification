@@ -42,6 +42,11 @@ class Fpidataset(Dataset):
         #open as PIL Image
         img = Image.open(img_path).convert('RGB')
 
+        if img is None:
+            print("image: ", img_path, " is none!!!!!!!!!!!!!!!     with image: ", img)
+
+        if self.transform is None:
+            print("transform: ", self.transform, " is none!!!!!!!!!!")
         #transform
         image = self.transform(img)
 
