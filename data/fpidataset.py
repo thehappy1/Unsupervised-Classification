@@ -6,10 +6,10 @@ import pandas as pd
 
 class Fpidataset(Dataset):
     # Constructor
-    def __init__(self, train=True, transforms=None):
+    def __init__(self, train=True, transform=None):
 
         self.train = train
-        self.transform = transforms
+        self.transform = transform
 
         df = pd.read_csv('data/styles.csv', error_bad_lines=False)
         #/media/sda/fschmedes/Contrastive-Clustering/
