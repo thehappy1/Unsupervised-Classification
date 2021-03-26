@@ -39,15 +39,18 @@ class Fpidataset(Dataset):
 
         #open as PIL Image
         image = Image.open(img_path).convert('RGB')
+        img_size = image.size
 
         #transform
         if self.transform is not None:
-            image = self.transform(img)
+            image = self.transform(image)
 
         #get label
-        label = self.df.targets[idx]
+        target = self.df.targets[idx]
 
-        return image, label
+        out = {'image': image, 'target': target, 'meta': {'im_size': img_size, 'index': idx}}
+
+        return out
 
 
 def get_i_items(df, start, stop):
