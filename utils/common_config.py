@@ -272,6 +272,7 @@ def get_train_transformations(p):
 
     elif p['augmentation_strategy'] == 'fashion_clr':
         # Augmentation strategy from the SimCLR paper adjusted for GrayScale images
+        # without color jitter
         return transforms.Compose([
             transforms.RandomResizedCrop(**p['augmentation_kwargs']['random_resized_crop']),
             transforms.RandomHorizontalFlip(),
