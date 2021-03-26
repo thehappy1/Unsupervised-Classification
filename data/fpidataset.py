@@ -6,17 +6,10 @@ import pandas as pd
 
 class Fpidataset(Dataset):
     # Constructor
-    def __init__(self, train, img_size, transform):
+    def __init__(self, train=True, transform=None):
 
         self.transform = transform
-        self.img_size = img_size
         self.train = train
-
-        if transform is None:
-            transform = torchvision.transforms.Compose([
-                torchvision.transforms.Resize((img_size, img_size)),
-                torchvision.transforms.ToTensor()
-            ])
         self.transform = transform
 
         df = pd.read_csv('data/styles.csv', error_bad_lines=False)
