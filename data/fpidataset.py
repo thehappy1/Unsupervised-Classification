@@ -11,6 +11,7 @@ class Fpidataset(Dataset):
         self.transform = transform
         self.train = train
         self.transform = transform
+        print("transform -------------------------------: ", self.transform)
 
         df = pd.read_csv('data/styles.csv', error_bad_lines=False)
         #/media/sda/fschmedes/Contrastive-Clustering/
