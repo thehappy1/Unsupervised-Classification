@@ -229,6 +229,7 @@ def get_val_dataloader(p, dataset):
 
 
 def get_train_transformations(p):
+    print("train_transforms wird aufgerufen!!!!!!!!!!!")
     if p['augmentation_strategy'] == 'standard':
         # Standard augmentation strategy
         return transforms.Compose([
@@ -239,6 +240,7 @@ def get_train_transformations(p):
         ])
     
     elif p['augmentation_strategy'] == 'simclr':
+        print("train_transforms mit simclr!!!!!!!!!!!")
         # Augmentation strategy from the SimCLR paper
         # hier muss bei GrayScale Images der ColorJitter entfernt werden
         # damit die Strategie mit dem FASHION-MNIST kompatibel ist
