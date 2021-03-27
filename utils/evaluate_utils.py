@@ -11,7 +11,7 @@ from data.custom_dataset import NeighborsDataset
 from sklearn import metrics
 from scipy.optimize import linear_sum_assignment
 from losses.losses import entropy
-
+from s_dbw import S_Dbw, SD
 
 @torch.no_grad()
 def contrastive_evaluate(val_loader, model, memory_bank):
@@ -144,6 +144,11 @@ def hungarian_evaluate(subhead_index, all_predictions, class_names=None,
     acc = int((reordered_preds == targets).sum()) / float(num_elems)
     nmi = metrics.normalized_mutual_info_score(targets.cpu().numpy(), predictions.cpu().numpy())
     ari = metrics.adjusted_rand_score(targets.cpu().numpy(), predictions.cpu().numpy())
+    s_dbw = S_Dbw(targets.cpu().numpy(), predictions.cpu().numpy())
+    sd = SD(targets.cpu().numpy(), predictions.cpu().numpy())
+    db = metrics.davies_bouldin_score(targets.cpu().numpy(), predictions.cpu().numpy())
+    s = metrics.silhouette_score(targets.cpu().numpy(), predictions.cpu().numpy())
+
     
     _, preds_top5 = probs.topk(5, 1, largest=True)
     reordered_preds_top5 = torch.zeros_like(preds_top5)
@@ -157,7 +162,7 @@ def hungarian_evaluate(subhead_index, all_predictions, class_names=None,
         confusion_matrix(reordered_preds.cpu().numpy(), targets.cpu().numpy(), 
                             class_names, confusion_matrix_file)
 
-    return {'ACC': acc, 'ARI': ari, 'NMI': nmi, 'ACC Top-5': top5, 'hungarian_match': match}
+    return {'ACC': acc, 'ARI': ari, 'NMI': nmi, 'S_dbw': s_dbw, 'SD': sd, 'DB ': db, 's': s, 'ACC Top-5': top5, 'hungarian_match': match}
 
 
 @torch.no_grad()
