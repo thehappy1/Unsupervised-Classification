@@ -10,9 +10,9 @@ class Fpidataset(Dataset):
         self.train = train
         self.transform = transform
 
-        df = pd.read_csv('styles.csv', error_bad_lines=False)
+        df = pd.read_csv('data/styles.csv', error_bad_lines=False)
         #/media/sda/fschmedes/Contrastive-Clustering/
-        df['image_path'] = df.apply(lambda x: os.path.join("images", str(x.id) + ".jpg"), axis=1)
+        df['image_path'] = df.apply(lambda x: os.path.join("data/images", str(x.id) + ".jpg"), axis=1)
         df = df.drop([32309, 40000, 36381, 16194, 6695]) #drop rows with no image
 
         temp = df.articleType.value_counts().sort_values(ascending=False)[:10].index.tolist()
