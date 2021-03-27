@@ -9,6 +9,7 @@ class Fpidataset(Dataset):
 
         self.train = train
         self.transform = transform
+        self.classes = ['Shirts', 'Watches', "Tshirts", "Casual Shoes", "Handbags", "Tops", "Kurtas", "Sports Shoes", "Heels", "Sunglasses"]
 
         df = pd.read_csv('data/styles.csv', error_bad_lines=False)
         #/media/sda/fschmedes/Contrastive-Clustering/
@@ -24,7 +25,6 @@ class Fpidataset(Dataset):
             mapper[cat] = i
         print(mapper)
         df['targets'] = df.articleType.map(mapper)
-
 
         if self.train:
             self.df = get_i_items(df,temp,0, 800)
@@ -58,7 +58,10 @@ class Fpidataset(Dataset):
         # get label
         target = self.targets[idx]
 
-        out = {'image': image, 'target': target, 'meta': {'im_size': img_size, 'index': idx}}
+        # get classname
+        classname = self.classes[target]
+
+        out = {'image': image, 'target': target, 'meta': {'im_size': img_size, 'index': idx, 'class name': classname}}
 
         return out
 
