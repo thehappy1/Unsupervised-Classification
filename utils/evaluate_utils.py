@@ -70,7 +70,6 @@ def get_predictions(p, dataloader, model, return_features=False):
 
     predictions = [torch.cat(pred_, dim = 0).cpu() for pred_ in predictions]
     probs = [torch.cat(prob_, dim=0).cpu() for prob_ in probs]
-    print("cat targets: -------- ", targets)
     targets = torch.cat(targets, dim=0)
 
     if include_neighbors:
