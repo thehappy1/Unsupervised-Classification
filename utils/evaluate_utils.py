@@ -144,8 +144,8 @@ def hungarian_evaluate(subhead_index, all_predictions, class_names=None,
     acc = int((reordered_preds == targets).sum()) / float(num_elems)
     nmi = metrics.normalized_mutual_info_score(targets.cpu().numpy(), predictions.cpu().numpy())
     ari = metrics.adjusted_rand_score(targets.cpu().numpy(), predictions.cpu().numpy())
-    s_dbw = S_Dbw(targets.cpu().numpy(), predictions.cpu().numpy())
-    sd = SD(targets.cpu().numpy(), predictions.cpu().numpy())
+    #s_dbw = S_Dbw(targets.cpu().numpy(), predictions.cpu().numpy())
+    #sd = SD(targets.cpu().numpy(), predictions.cpu().numpy())
     db = metrics.davies_bouldin_score(targets.cpu().numpy(), predictions.cpu().numpy())
     s = metrics.silhouette_score(targets.cpu().numpy(), predictions.cpu().numpy())
 
@@ -162,7 +162,7 @@ def hungarian_evaluate(subhead_index, all_predictions, class_names=None,
         confusion_matrix(reordered_preds.cpu().numpy(), targets.cpu().numpy(), 
                             class_names, confusion_matrix_file)
 
-    return {'ACC': acc, 'ARI': ari, 'NMI': nmi, 'S_dbw': s_dbw, 'SD': sd, 'DB ': db, 's': s, 'ACC Top-5': top5, 'hungarian_match': match}
+    return {'ACC': acc, 'ARI': ari, 'NMI': nmi, 'DB ': db, 's': s, 'ACC Top-5': top5, 'hungarian_match': match}
 
 
 @torch.no_grad()
