@@ -161,8 +161,8 @@ def hungarian_evaluate(subhead_index, all_predictions, class_names=None,
     if compute_confusion_matrix:
         confusion_matrix(reordered_preds.cpu().numpy(), targets.cpu().numpy(), 
                             class_names, confusion_matrix_file)
-
-    return {'ACC': acc, 'ARI': ari, 'NMI': nmi, 's_dbw': s_dbw, 'DB ': db, 's: ': s, 'ACC Top-5': top5, 'hungarian_match': match}
+    #'s_dbw': s_dbw
+    return {'ACC': acc, 'ARI': ari, 'NMI': nmi, 'DB ': db, 's: ': s, 'ACC Top-5': top5, 'hungarian_match': match}
 
 
 @torch.no_grad()
