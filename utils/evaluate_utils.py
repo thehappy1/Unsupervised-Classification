@@ -144,7 +144,9 @@ def hungarian_evaluate(subhead_index, all_predictions, class_names=None,
     nmi = metrics.normalized_mutual_info_score(targets.cpu().numpy(), predictions.cpu().numpy())
     ari = metrics.adjusted_rand_score(targets.cpu().numpy(), predictions.cpu().numpy())
     db = metrics.davies_bouldin_score(features, predictions.cpu().numpy())
-    #s = metrics.silhouette_score(targets.cpu().numpy(), predictions.cpu().numpy())
+    from s_dbw import Sdbw
+    s_dbw = Sdbw(features, predictions.cpu().numpy())
+    s = metrics.silhouette_score(features, predictions.cpu().numpy(), metric='euclidean')
 
     
     _, preds_top5 = probs.topk(5, 1, largest=True)
@@ -158,8 +160,8 @@ def hungarian_evaluate(subhead_index, all_predictions, class_names=None,
     if compute_confusion_matrix:
         confusion_matrix(reordered_preds.cpu().numpy(), targets.cpu().numpy(), 
                             class_names, confusion_matrix_file)
-    #'s': s
-    return {'ACC': acc, 'ARI': ari, 'NMI': nmi, 'DB ': db, 'ACC Top-5': top5, 'hungarian_match': match}
+
+    return {'ACC': acc, 'ARI': ari, 'NMI': nmi, 's_dbw': s_dbw, 'DB ': db, 's: ': s, 'ACC Top-5': top5, 'hungarian_match': match}
 
 
 @torch.no_grad()
