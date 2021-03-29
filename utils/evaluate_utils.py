@@ -32,7 +32,7 @@ def contrastive_evaluate(val_loader, model, memory_bank):
 
 
 @torch.no_grad()
-def get_predictions(p, dataloader, model, return_features=False):
+def get_predictions(p, dataloader, model, return_features=False, only_features=False):
     # Make predictions on a dataset with neighbors
     model.eval()
     predictions = [[] for _ in range(p['num_heads'])]
@@ -80,6 +80,8 @@ def get_predictions(p, dataloader, model, return_features=False):
 
     if return_features:
         return out, features.cpu()
+    if only_features:
+        return features.cpu()
     else:
         return out
 
@@ -128,7 +130,6 @@ def hungarian_evaluate(subhead_index, all_predictions, class_names=None,
 
     # Hungarian matching
     head = all_predictions[subhead_index]
-    print("head indizes: ", head)
     targets = head['targets'].cuda()
     predictions = head['predictions'].cuda()
     probs = head['probabilities'].cuda()
