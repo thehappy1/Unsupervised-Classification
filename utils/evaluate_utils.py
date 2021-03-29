@@ -122,13 +122,14 @@ def scan_evaluate(predictions):
 @torch.no_grad()
 def hungarian_evaluate(subhead_index, all_predictions, class_names=None, 
                         compute_purity=True, compute_confusion_matrix=True,
-                        confusion_matrix_file=None):
+                        confusion_matrix_file=None, features=None):
     # Evaluate model based on hungarian matching between predicted cluster assignment and gt classes.
     # This is computed only for the passed subhead index.
 
     # Hungarian matching
     head = all_predictions[subhead_index]
-    print("head indizes: ", head)
+    features = features
+    print("features: ", features)
     targets = head['targets'].cuda()
     predictions = head['predictions'].cuda()
     probs = head['probabilities'].cuda()
