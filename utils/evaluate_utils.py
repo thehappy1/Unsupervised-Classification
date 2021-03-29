@@ -144,12 +144,10 @@ def hungarian_evaluate(subhead_index, all_predictions, class_names=None,
     nmi = metrics.normalized_mutual_info_score(targets.cpu().numpy(), predictions.cpu().numpy())
     ari = metrics.adjusted_rand_score(targets.cpu().numpy(), predictions.cpu().numpy())
     db = metrics.davies_bouldin_score(features, predictions.cpu().numpy())
-    print("features shape: ", features.shape)
-    print("features: ", features)
-
-    from s_dbw import S_Dbw
-    s_dbw = S_Dbw(features, predictions.cpu().numpy())
     s = metrics.silhouette_score(features, predictions.cpu().numpy(), metric='euclidean')
+    #from s_dbw import S_Dbw
+    #s_dbw = S_Dbw(features, predictions.cpu().numpy())
+
 
     
     _, preds_top5 = probs.topk(5, 1, largest=True)
