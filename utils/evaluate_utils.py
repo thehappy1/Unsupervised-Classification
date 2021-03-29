@@ -77,9 +77,9 @@ def get_predictions(p, dataloader, model, return_features=False, only_features=F
 
     else:
         out = [{'predictions': pred_, 'probabilities': prob_, 'targets': targets} for pred_, prob_ in zip(predictions, probs)]
-
-    if return_features:
-        return out, features.cpu()
+    if only_features is False:
+        if return_features:
+            return out, features.cpu()
     if only_features:
         return features.cpu()
     else:

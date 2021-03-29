@@ -114,7 +114,7 @@ def main():
     print(colored('Evaluate model at the end', 'blue'))
 
     predictions = get_predictions(p, val_dataloader, model)
-    features = get_predictions(p, val_dataloader, model, only_features=True)
+    features = get_predictions(p, val_dataloader, model, return_features=True, only_features=True)
     print("features: ", features.shape)
     clustering_stats = hungarian_evaluate(0, predictions, 
                                 class_names=val_dataset.classes,
