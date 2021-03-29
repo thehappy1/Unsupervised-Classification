@@ -115,7 +115,7 @@ def main():
 
     predictions = get_predictions(p, val_dataloader, model)
     features = get_predictions(p, val_dataloader, model, only_features=True)
-    print("features: ", features)
+    print("features: ", features.shape)
     clustering_stats = hungarian_evaluate(0, predictions, 
                                 class_names=val_dataset.classes,
                                 compute_confusion_matrix=True,
