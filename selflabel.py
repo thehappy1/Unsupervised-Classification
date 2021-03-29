@@ -113,7 +113,7 @@ def main():
     # Evaluate and save the final model
     print(colored('Evaluate model at the end', 'blue'))
 
-    predictions = get_predictions(p, val_dataloader, model, return_features=True)
+    predictions = get_predictions(p, val_dataloader, model)
     clustering_stats = hungarian_evaluate(0, predictions, 
                                 class_names=val_dataset.classes,
                                 compute_confusion_matrix=True,
