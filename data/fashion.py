@@ -17,10 +17,10 @@ class Fashion(Dataset):
         self.transform = transform
 
         if self.train:
-            train_csv = pd.read_csv("FashionMNIST/FashionMNIST/csv/fashion-mnist_train.csv")
+            train_csv = pd.read_csv("data/FashionMNIST/FashionMNIST/csv/fashion-mnist_train.csv")
             self.fashion_MNIST = list(train_csv.values)
         else:
-            test_csv = pd.read_csv("FashionMNIST/FashionMNIST/csv/fashion-mnist_test.csv")
+            test_csv = pd.read_csv("data/FashionMNIST/FashionMNIST/csv/fashion-mnist_test.csv")
             self.fashion_MNIST = list(test_csv.values)
 
         label = []
