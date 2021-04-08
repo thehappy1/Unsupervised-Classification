@@ -30,7 +30,7 @@ class Fashion(Dataset):
             # first column is of labels.
             label.append(i[0])
             image.append(i[1:])
-        self.labels = label
+        self.labels = label.tolist()
 
         # Dimension of Images = 28 * 28 * 1. where height = width = 28 and color_channels = 1.
         self.images = np.asarray(image).reshape(-1, 28, 28).astype('uint8')
