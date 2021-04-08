@@ -151,7 +151,10 @@ def get_train_dataset(p, transform, to_augmented_dataset=False,
 
     elif p['train_db_name'] == 'fashion-mnist':
         from data.fashion import Fashion
-        dataset = Fashion(train=True, transform=transform)
+        dataset = Fashion(root="./data",
+                          download=True,
+                          train=True,
+                          transform=transform)
 
     elif p['train_db_name'] == 'fpi':
         from data.fpidataset import Fpidataset
@@ -198,7 +201,10 @@ def get_val_dataset(p, transform=None, to_neighbors_dataset=False):
 
     elif p['val_db_name'] == 'fashion-mnist':
         from data.fashion import Fashion
-        dataset = Fashion(train=False, transform=transform)
+        dataset = Fashion(root="./data",
+                          download=False,
+                          train=True,
+                          transform=transform)
 
     elif p['val_db_name'] == 'fpi':
         from data.fpidataset import Fpidataset
