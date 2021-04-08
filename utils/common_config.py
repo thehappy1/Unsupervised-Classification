@@ -151,10 +151,7 @@ def get_train_dataset(p, transform, to_augmented_dataset=False,
 
     elif p['train_db_name'] == 'fashion-mnist':
         from data.fashion import Fashion
-        dataset = Fashion(root="./data",
-                          download=True,
-                          train=True,
-                          transform=transform)
+        dataset = Fashion(train=True, transform=transform)
 
     elif p['train_db_name'] == 'fpi':
         from data.fpidataset import Fpidataset
@@ -201,10 +198,7 @@ def get_val_dataset(p, transform=None, to_neighbors_dataset=False):
 
     elif p['val_db_name'] == 'fashion-mnist':
         from data.fashion import Fashion
-        dataset = Fashion(root="./data",
-                          download=False,
-                          train=True,
-                          transform=transform)
+        dataset = Fashion(train=False, transform=transform)
 
     elif p['val_db_name'] == 'fpi':
         from data.fpidataset import Fpidataset
@@ -217,7 +211,6 @@ def get_val_dataset(p, transform=None, to_neighbors_dataset=False):
     if to_neighbors_dataset: # Dataset returns an image and one of its nearest neighbors.
         from data.custom_dataset import NeighborsDataset
         indices = np.load(p['topk_neighbors_val_path'])
-        print(len(dataset))
         dataset = NeighborsDataset(dataset, indices, 5) # Only use 5
 
     return dataset
