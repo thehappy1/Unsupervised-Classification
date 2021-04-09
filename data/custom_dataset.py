@@ -61,6 +61,7 @@ class NeighborsDataset(Dataset):
             self.indices = self.indices[:, :num_neighbors+1]
             print("indices shape: ", self.indices.shape[0])
             print("dataset len: ", len(self.dataset))
+            print(self.indices.shape[0] == len(self.dataset))
         assert(self.indices.shape[0] == len(self.dataset))
 
     def __len__(self):
