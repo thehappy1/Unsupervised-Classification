@@ -78,7 +78,7 @@ def main():
             _, acc = memory_bank.mine_nearest_neighbors(topk)
             print('Accuracy of top-{} nearest neighbors on validation set is {:.2f}'.format(topk, 100*acc))
 
-
+    # Perform general evaluation for SCAN
     elif config['setup'] in ['scan', 'selflabel']:
         print(colored('Perform evaluation of the clustering model (setup={}).'.format(config['setup']), 'blue'))
         head = state_dict['head'] if config['setup'] == 'scan' else 0
