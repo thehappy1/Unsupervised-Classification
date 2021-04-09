@@ -153,7 +153,7 @@ def get_train_dataset(p, transform, to_augmented_dataset=False,
         import torchvision
         dataset = torchvision.datasets.FashionMNIST(root=".data/FashionMNIST_new",
                                                     download=True,
-                                                    train=False,
+                                                    train=True,
                                                     transform=transform)
 
     elif p['train_db_name'] == 'fpi':
@@ -203,7 +203,7 @@ def get_val_dataset(p, transform=None, to_neighbors_dataset=False):
         import torchvision
         dataset = torchvision.datasets.FashionMNIST(root=".data/FashionMNIST_new",
                                                     download=True,
-                                                    train=True,
+                                                    train=False,
                                                     transform=transform)
 
     elif p['val_db_name'] == 'fpi':
