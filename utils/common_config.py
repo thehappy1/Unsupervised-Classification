@@ -150,8 +150,8 @@ def get_train_dataset(p, transform, to_augmented_dataset=False,
         dataset = ImageNetSubset(subset_file=subset_file, split='train', transform=transform)
 
     elif p['train_db_name'] == 'fashion-mnist':
-        import torchvision
-        dataset = torchvision.datasets.FashionMNIST(root=".data/FashionMNIST_new",
+        from data.fashion import FashionMNIST
+        dataset = FashionMNIST(root=".data/FashionMNIST_new",
                                                     download=True,
                                                     train=True,
                                                     transform=transform)
@@ -200,8 +200,8 @@ def get_val_dataset(p, transform=None, to_neighbors_dataset=False):
         dataset = ImageNetSubset(subset_file=subset_file, split='val', transform=transform)
 
     elif p['val_db_name'] == 'fashion-mnist':
-        import torchvision
-        dataset = torchvision.datasets.FashionMNIST(root=".data/FashionMNIST_new",
+        from data.fashion import FashionMNIST
+        dataset = FashionMNIST(root=".data/FashionMNIST_new",
                                                     download=True,
                                                     train=False,
                                                     transform=transform)
