@@ -74,7 +74,6 @@ class NeighborsDataset(Dataset):
         neighbor_index = np.random.choice(self.indices[index], 1)[0]
         neighbor = self.dataset.__getitem__(neighbor_index)
 
-        print("achor: ", anchor['image'])
         anchor['image'] = self.anchor_transform(anchor['image'])
         neighbor['image'] = self.neighbor_transform(neighbor['image'])
 
