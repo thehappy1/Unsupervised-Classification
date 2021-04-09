@@ -58,8 +58,8 @@ class NeighborsDataset(Dataset):
         self.dataset = dataset
         self.indices = indices # Nearest neighbor indices (np.array  [len(dataset) x k])
         if num_neighbors is not None:
-            print("num_neighbors is NONE!!!!!!!!!!!!")
             self.indices = self.indices[:, :num_neighbors+1]
+            print (self.indices)
         assert(self.indices.shape[0] == len(self.dataset))
 
     def __len__(self):
