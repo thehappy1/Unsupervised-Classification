@@ -92,7 +92,8 @@ class MNIST(VisionDataset):
         #self.data = self.data.reshape((60000, 28, 28))
         self.data = np.stack((self.data,) * 3, axis=-1)
         print("output: ", self.data.shape)
-        print("targets: ", self.targets)
+        self.targets = self.targets.tolist()
+
     def __getitem__(self, index: int) -> Tuple[Any, Any]:
         """
         Args:
@@ -101,7 +102,7 @@ class MNIST(VisionDataset):
         Returns:
             tuple: (image, target) where target is index of the target class.
         """
-        img, target = self.data[index], int(self.targets[index])
+        img, target = self.data[index], self.targets[index]
 
         # doing this so that it is consistent with all other datasets
         # to return a PIL Image
