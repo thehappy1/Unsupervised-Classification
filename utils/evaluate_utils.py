@@ -149,7 +149,7 @@ def hungarian_evaluate(subhead_index, all_predictions, class_names=None,
     #s = metrics.silhouette_score(features, predictions.cpu().numpy(), metric='euclidean')
     #from s_dbw import S_Dbw
     #s_dbw = S_Dbw(features, predictions.cpu().numpy())
-
+    #'DB ': db, 's: ': s
 
     
     _, preds_top5 = probs.topk(5, 1, largest=True)
@@ -164,7 +164,7 @@ def hungarian_evaluate(subhead_index, all_predictions, class_names=None,
         confusion_matrix(reordered_preds.cpu().numpy(), targets.cpu().numpy(), 
                             class_names, confusion_matrix_file)
     #'s_dbw': s_dbw
-    return {'ACC': acc, 'ARI': ari, 'NMI': nmi, 'DB ': db, 's: ': s, 'ACC Top-5': top5, 'hungarian_match': match}
+    return {'ACC': acc, 'ARI': ari, 'NMI': nmi, 'ACC Top-5': top5, 'hungarian_match': match}
 
 
 @torch.no_grad()
