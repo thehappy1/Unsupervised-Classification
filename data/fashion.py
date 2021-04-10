@@ -93,7 +93,7 @@ class MNIST(VisionDataset):
         self.data = np.stack((self.data,) * 3, axis=-1)
         print("output: ", self.data.shape)
         self.targets = self.targets.tolist()
-        print("targets type: ", self.targets)
+        print("targets shape: ", self.targets.shape)
 
     def __getitem__(self, index: int) -> Tuple[Any, Any]:
         """
