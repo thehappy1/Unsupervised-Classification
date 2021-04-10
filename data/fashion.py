@@ -86,13 +86,12 @@ class MNIST(VisionDataset):
         else:
             data_file = self.test_file
         self.data, self.targets = torch.load(os.path.join(self.processed_folder, data_file))
-        print("targets type: ", self.targets.type)
         print("input: ", self.data.shape)
         #reshape and stack to get shape of (60000, 28, 28, 3)
         #self.data = self.data.reshape((60000, 28, 28))
         self.data = np.stack((self.data,) * 3, axis=-1)
         print("output: ", self.data.shape)
-        self.targets = self.targets.tolist()
+        self.targets = self.targets.numpy()
 
     def __getitem__(self, index: int) -> Tuple[Any, Any]:
         """
