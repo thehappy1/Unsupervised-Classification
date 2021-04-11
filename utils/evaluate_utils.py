@@ -161,10 +161,10 @@ def hungarian_evaluate(subhead_index, all_predictions, class_names=None,
         # s_dbw = S_Dbw(features, predictions.cpu().numpy())
         # 's_dbw': s_dbw
 
-    db = metrics.davies_bouldin_score(features, predictions.cpu().numpy())
-    s = metrics.silhouette_score(features, predictions.cpu().numpy(), metric='euclidean')
-
-    return {'ACC': acc, 'ARI': ari, 'NMI': nmi, 'DB ': db, 's: ': s, 'ACC Top-5': top5, 'hungarian_match': match}
+    #db = metrics.davies_bouldin_score(features, predictions.cpu().numpy())
+    #s = metrics.silhouette_score(features, predictions.cpu().numpy(), metric='euclidean')
+    #'DB ': db, 's: ': s,
+    return {'ACC': acc, 'ARI': ari, 'NMI': nmi, 'ACC Top-5': top5, 'hungarian_match': match}
 
 
 @torch.no_grad()
