@@ -157,14 +157,14 @@ def hungarian_evaluate(subhead_index, all_predictions, class_names=None,
     if compute_confusion_matrix:
         confusion_matrix(reordered_preds.cpu().numpy(), targets.cpu().numpy(), 
                             class_names, confusion_matrix_file)
-        db = metrics.davies_bouldin_score(features, predictions.cpu().numpy())
-        s = metrics.silhouette_score(features, predictions.cpu().numpy(), metric='euclidean')
+        #db = metrics.davies_bouldin_score(features, predictions.cpu().numpy())
+        #s = metrics.silhouette_score(features, predictions.cpu().numpy(), metric='euclidean')
         # from s_dbw import S_Dbw
         # s_dbw = S_Dbw(features, predictions.cpu().numpy())
         # 's_dbw': s_dbw
-        return {'ACC': acc, 'ARI': ari, 'NMI': nmi, 'DB ': db, 's: ': s, 'ACC Top-5': top5, 'hungarian_match': match}
-    else:
-        return {'ACC': acc, 'ARI': ari, 'NMI': nmi, 'ACC Top-5': top5, 'hungarian_match': match}
+        #return {'ACC': acc, 'ARI': ari, 'NMI': nmi, 'DB ': db, 's: ': s, 'ACC Top-5': top5, 'hungarian_match': match}
+
+    return {'ACC': acc, 'ARI': ari, 'NMI': nmi, 'ACC Top-5': top5, 'hungarian_match': match}
 
 
 @torch.no_grad()
