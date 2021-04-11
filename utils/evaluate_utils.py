@@ -147,7 +147,7 @@ def hungarian_evaluate(subhead_index, all_predictions, class_names=None,
     print("predictions dimensions: ", predictions.cpu().numpy())
     from s_dbw import S_Dbw
     s_dbw = S_Dbw(features.numpy(), predictions.cpu().numpy())
-    # 's_dbw': s_dbw
+
     _, preds_top5 = probs.topk(5, 1, largest=True)
     reordered_preds_top5 = torch.zeros_like(preds_top5)
     for pred_i, target_i in match:
@@ -163,7 +163,7 @@ def hungarian_evaluate(subhead_index, all_predictions, class_names=None,
     db = metrics.davies_bouldin_score(features, predictions.cpu().numpy())
     s = metrics.silhouette_score(features, predictions.cpu().numpy(), metric='euclidean')
 
-    return {'ACC': acc, 'ARI': ari, 'NMI': nmi, 'DB ': db, 's: ': s,'ACC Top-5': top5, 'hungarian_match': match}
+    return {'ACC': acc, 'ARI': ari, 'NMI': nmi, 'DB ': db, 'S: ': s, 'S_DBW': s_dbw, 'ACC Top-5': top5, 'hungarian_match': match}
 
 
 @torch.no_grad()
