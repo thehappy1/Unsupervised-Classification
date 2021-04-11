@@ -146,7 +146,7 @@ def hungarian_evaluate(subhead_index, all_predictions, class_names=None,
     print("features dimension: ", features)
     print("predictions dimensions: ", predictions.cpu().numpy())
     from s_dbw import S_Dbw
-    #s_dbw = S_Dbw(features, predictions.cpu().numpy())
+    s_dbw = S_Dbw(features.numpy(), predictions.cpu().numpy())
     # 's_dbw': s_dbw
     _, preds_top5 = probs.topk(5, 1, largest=True)
     reordered_preds_top5 = torch.zeros_like(preds_top5)
@@ -155,7 +155,7 @@ def hungarian_evaluate(subhead_index, all_predictions, class_names=None,
     correct_top5_binary = reordered_preds_top5.eq(targets.view(-1,1).expand_as(reordered_preds_top5))
     top5 = float(correct_top5_binary.sum()) / float(num_elems)
 
-    # Compute confusion matrix
+    # Compute confusion matrixput
     if compute_confusion_matrix:
         confusion_matrix(reordered_preds.cpu().numpy(), targets.cpu().numpy(), 
                             class_names, confusion_matrix_file)
