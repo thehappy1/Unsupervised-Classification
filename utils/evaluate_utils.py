@@ -6,7 +6,7 @@ import numpy as np
 import torch
 import torch.nn.functional as F
 from utils.common_config import get_feature_dimensions_backbone
-from utils.utils import AverageMeter, confusion_matrix
+from utils.utils import AverageMeter, confusion_matrix, compute_tsne
 from data.custom_dataset import NeighborsDataset
 from sklearn import metrics
 from scipy.optimize import linear_sum_assignment
@@ -122,7 +122,7 @@ def scan_evaluate(predictions):
 @torch.no_grad()
 def hungarian_evaluate(subhead_index, all_predictions, class_names=None, 
                         compute_purity=True, compute_confusion_matrix=True,
-                        confusion_matrix_file=None, features=None):
+                        confusion_matrix_file=None, features=None, tsne=None):
     # Evaluate model based on hungarian matching between predicted cluster assignment and gt classes.
     # This is computed only for the passed subhead index.
 
@@ -159,6 +159,8 @@ def hungarian_evaluate(subhead_index, all_predictions, class_names=None,
     if compute_confusion_matrix:
         confusion_matrix(reordered_preds.cpu().numpy(), targets.cpu().numpy(), 
                             class_names, confusion_matrix_file)
+    if tsne:
+        compute_tsne(features, predictions.cpu().numpy())
 
     db = metrics.davies_bouldin_score(features, predictions.cpu().numpy())
     s = metrics.silhouette_score(features, predictions.cpu().numpy(), metric='euclidean')

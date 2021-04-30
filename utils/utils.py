@@ -70,7 +70,6 @@ def fill_memory_bank(loader, model, memory_bank):
         if i % 100 == 0:
             print('Fill Memory Bank [%d/%d]' %(i, len(loader)))
 
-
 def confusion_matrix(predictions, gt, class_names, output_file=None):
     # Plot confusion_matrix and store result to output_file
     import sklearn.metrics
@@ -97,3 +96,12 @@ def confusion_matrix(predictions, gt, class_names, output_file=None):
     else:
         plt.savefig(output_file, dpi=300, bbox_inches='tight')
     plt.close()
+
+def compute_tsne(features, labels):
+    from sklearn.manifold import TSNE
+    import time
+    time_start = time.time()
+
+    tsne = TSNE(n_components=2, perplexity=20, n_jobs=16, random_state=0, verbose=0).fit_transform(features)
+
+    print("t-SNE done! Time elapsed: {} seconds".format(time.time()-time_start))
