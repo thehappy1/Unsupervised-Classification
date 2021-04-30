@@ -115,6 +115,13 @@ def main():
 
     #predictions = get_predictions(p, val_dataloader, model)
     predictions, features = get_predictions(p, val_dataloader, model, return_features=True)
+
+    #visualization
+    #from sklearn.manifold import TSNE
+
+    #m = TSNE(learning_rate=50)
+
+
     clustering_stats = hungarian_evaluate(0, predictions, 
                                 class_names=val_dataset.classes,
                                 compute_confusion_matrix=True,
