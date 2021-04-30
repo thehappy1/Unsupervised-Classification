@@ -115,33 +115,22 @@ def compute_tsne(features, labels):
 
     tsne = TSNE(n_components=2, perplexity=20, n_jobs=16, random_state=0, verbose=0).fit_transform(features)
 
-    # choose a color palette with seaborn.
-    num_classes = len(np.unique(labels))
-    palette = np.array(sns.color_palette("hls", num_classes))
+    viz_df = pd.DataFrame(data=tsne)
+    viz_df['Label'] = labels
 
-    # create a scatter plot.
-    f = plt.figure(figsize=(8, 8))
-    ax = plt.subplot(aspect='equal')
-    sc = ax.scatter(tsne[:, 0], tsne[:, 1], lw=0, s=40, c=palette[labels.astype(np.int)])
-    plt.xlim(-25, 25)
-    plt.ylim(-25, 25)
-    ax.axis('off')
-    ax.axis('tight')
+    viz_df.to_csv('tsne.csv')
+    plt.subplots(figsize=(8, 5))
+    sns.scatterplot(x=0, y=1, hue=viz_df.Label.tolist(), legend='full', hue_order=sorted(viz_df['Label'].unique()),
+                    palette=sns.color_palette("hls", n_colors=10),
+                    alpha=.5,
+                    data=viz_df)
+    l = plt.legend(bbox_to_anchor=(-.1, 1.00, 1.1, .5), loc="lower left", markerfirst=True,
+                   mode="expand", borderaxespad=0, ncol=10 + 1, handletextpad=0.01, )
 
-    # add the labels for each digit corresponding to the label
-    txts = []
-
-    for i in range(num_classes):
-        # Position of each label at median of data points.
-
-        xtext, ytext = np.median(tsne[labels == i, :], axis=0)
-        txt = ax.text(xtext, ytext, str(i), fontsize=24)
-        txt.set_path_effects([
-            PathEffects.Stroke(linewidth=5, foreground="w"),
-            PathEffects.Normal()])
-        txts.append(txt)
-
-    print("t-SNE done! Time elapsed: {} seconds".format(time.time() - time_start))
-    plt.savefig('tsne.png')
-    return f, ax, sc, txts
+    l.texts[0].set_text("")
+    plt.ylabel("")
+    plt.xlabel("")
+    plt.tight_layout()
+    plt.savefig('tnse.png', dpi=300)
+    plt.clf()
 
