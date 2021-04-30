@@ -131,6 +131,6 @@ def compute_tsne(features, labels):
     plt.ylabel("")
     plt.xlabel("")
     plt.tight_layout()
-    plt.savefig('tnse.png', dpi=300)
+    plt.savefig('tnse.png', dpi=150)
     plt.clf()
 
