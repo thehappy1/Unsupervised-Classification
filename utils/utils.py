@@ -115,8 +115,8 @@ def compute_tsne(features, labels):
 
     tsne = TSNE(n_components=2, perplexity=20, n_jobs=16, random_state=0, verbose=0).fit_transform(features)
 
-    viz_df = pd.DataFrame(data=tsne)
-    viz_df['Label'] = labels
+    viz_df = pd.DataFrame(data=tsne[:5000])
+    viz_df['Label'] = labels[:5000]
 
     viz_df.to_csv('tsne.csv')
     plt.subplots(figsize=(8, 5))
