@@ -142,6 +142,6 @@ def compute_tsne(features, labels):
         txts.append(txt)
 
     print("t-SNE done! Time elapsed: {} seconds".format(time.time() - time_start))
-
+    plt.savefig('tsne.png')
     return f, ax, sc, txts
 
