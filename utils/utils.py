@@ -122,7 +122,7 @@ def compute_tsne(features, labels):
     # create a scatter plot.
     f = plt.figure(figsize=(8, 8))
     ax = plt.subplot(aspect='equal')
-    sc = ax.scatter(features[:, 0], features[:, 1], lw=0, s=40, c=palette[labels.astype(np.int)])
+    sc = ax.scatter(tsne[:, 0], tsne[:, 1], lw=0, s=40, c=palette[labels.astype(np.int)])
     plt.xlim(-25, 25)
     plt.ylim(-25, 25)
     ax.axis('off')
@@ -134,7 +134,7 @@ def compute_tsne(features, labels):
     for i in range(num_classes):
         # Position of each label at median of data points.
 
-        xtext, ytext = np.median(features[labels == i, :], axis=0)
+        xtext, ytext = np.median(tsne[labels == i, :], axis=0)
         txt = ax.text(xtext, ytext, str(i), fontsize=24)
         txt.set_path_effects([
             PathEffects.Stroke(linewidth=5, foreground="w"),
