@@ -23,7 +23,6 @@ class Fpidataset(Dataset):
         mapper = {}
         for i, cat in enumerate(list(df.articleType.unique())):
             mapper[cat] = i
-        print("mappi", mapper)
         df['targets'] = df.articleType.map(mapper)
 
         if self.train:
@@ -77,7 +76,7 @@ def get_i_items(df, temp, start, stop):
         # for each targetclass in temp insert i items in dataframe
 
         for label in temp:
-            # print("Füge Items mit target", label, "ein.")
+            print("Füge Items mit target", label, "ein.")
             dataframe = dataframe.append(df[df.articleType == label][start:stop])
             # print("Anzahl items", len(dataframe))
 
