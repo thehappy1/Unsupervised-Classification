@@ -28,7 +28,6 @@ class Fpidataset(Dataset):
         if self.train:
             self.df = get_i_items(df,temp,0, 800)
             self.targets =  self.df.targets.tolist()
-            print("list: ", type(self.targets), "items: ", self.targets)
         else:
             self.df = get_i_items(df,temp,800, 1000)
             self.targets = self.df.targets.tolist()
@@ -68,7 +67,7 @@ def get_i_items(df, temp, start, stop):
         # get i items of each condition
 
         # calculate classes with more than 1000 items
-        print(df.articleType.value_counts().head(10))
+        #print(df.articleType.value_counts().head(10))
 
         # generate new empty dataframe with the columns of the original
         dataframe = df[:0]
@@ -76,7 +75,7 @@ def get_i_items(df, temp, start, stop):
         # for each targetclass in temp insert i items in dataframe
 
         for label in temp:
-            print("label: ", label, ": ", df[df.articleType == label].head(1))
+            #print("label: ", label, ": ", df[df.articleType == label].head(1))
             #print("Füge Items mit target", label, "ein.")
             dataframe = dataframe.append(df[df.articleType == label][start:stop])
             # print("Anzahl items", len(dataframe))
