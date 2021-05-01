@@ -76,7 +76,7 @@ def get_i_items(df, temp, start, stop):
         # for each targetclass in temp insert i items in dataframe
 
         for label in temp:
-            print(df[df.articleType == label].head(1))
+            print("label: ", label, ": ", df[df.articleType == label].head(1))
             #print("Füge Items mit target", label, "ein.")
             dataframe = dataframe.append(df[df.articleType == label][start:stop])
             # print("Anzahl items", len(dataframe))
