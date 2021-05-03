@@ -117,8 +117,10 @@ def compute_tsne(features, labels):
 
     viz_df = pd.DataFrame(data=tsne[:5000])
     viz_df['label'] = labels[:5000]
-    colors = ["Shirts", "Watches", "T-Shirts", "Casual Shoes", "Handbags", "Tops", "Kurtas", "Sport Shoes", "Heels",
-              "Sunglasses"]
+    dict = {0 : "Shirts", 1 : "Watches", 2 : "T-Shirts", 3 : "Casual Shoes", 4 : "Handbags", 5 : "Tops", 6 : "Kurtas", 7 : "Sport Shoes", 8 : "Heels",
+            9 : "Sunglasses"}
+
+    viz_df['label'] = viz_df["label"].map(dict)
 
     viz_df.to_csv('tsne.csv')
     plt.subplots(figsize=(8, 5))
