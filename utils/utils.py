@@ -122,10 +122,10 @@ def compute_tsne(features, labels):
             9 : "Sunglasses"}
 
     viz_df['label'] = viz_df["label"].map(dict)
-    print(viz_df.head(10))
+
     viz_df.to_csv('tsne.csv')
     plt.subplots(figsize=(14, 7))
-    sns.scatterplot(x=0, y=1, hue=viz_df.label.tolist(), legend='full', hue_order=sorted(list.unique()),
+    sns.scatterplot(x=0, y=1, hue=viz_df.label.tolist(), legend='full', hue_order=sorted(viz_df['Label'].unique()),
                     palette=sns.color_palette("hls", n_colors=10),
                     alpha=.5,
                     data=viz_df)
