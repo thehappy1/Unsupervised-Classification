@@ -117,7 +117,6 @@ def compute_tsne(features, labels):
 
     viz_df = pd.DataFrame(data=tsne[:5000])
     viz_df['label'] = labels[:5000]
-    list = viz_df.label
     dict = {0 : "Shirts", 1 : "Watches", 2 : "T-Shirts", 3 : "C. Shoes", 4 : "Handbags", 5 : "Tops", 6 : "Kurtas", 7 : "S. Shoes", 8 : "Heels",
             9 : "Sunglasses"}
 
@@ -125,7 +124,7 @@ def compute_tsne(features, labels):
 
     viz_df.to_csv('tsne.csv')
     plt.subplots(figsize=(14, 7))
-    sns.scatterplot(x=0, y=1, hue=viz_df.label.tolist(), legend='full', hue_order=sorted(viz_df['Label'].unique()),
+    sns.scatterplot(x=0, y=1, hue=viz_df.label.tolist(), legend='full', hue_order=sorted(viz_df['label'].unique()),
                     palette=sns.color_palette("hls", n_colors=10),
                     alpha=.5,
                     data=viz_df)
