@@ -119,17 +119,6 @@ def compute_tsne(features, labels):
     viz_df['label'] = labels[:5000]
     colors = ["Shirts", "Watches", "T-Shirts", "Casual Shoes", "Handbags", "Tops", "Kurtas", "Sport Shoes", "Heels",
               "Sunglasses"]
-    viz_df.loc[viz_df['label'] == 0] = "Shirts"
-    viz_df.loc[viz_df['label'] == 1] = "Watches"
-    viz_df.loc[viz_df['label'] == 2] = "T-Shirts"
-    viz_df.loc[viz_df['label'] == 3] = "Casual Shoes"
-    viz_df.loc[viz_df['label'] == 4] = "Handbags"
-    viz_df.loc[viz_df['label'] == 5] = "Tops"
-    viz_df.loc[viz_df['label'] == 6] = "Kurtas"
-    viz_df.loc[viz_df['label'] == 7] = "Sport Shoes"
-    viz_df.loc[viz_df['label'] == 8] = "Heels"
-    viz_df.loc[viz_df['label'] == 9] = "Sunglasses"
-    print(viz_df.head(10))
 
     viz_df.to_csv('tsne.csv')
     plt.subplots(figsize=(8, 5))
