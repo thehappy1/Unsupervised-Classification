@@ -116,13 +116,24 @@ def compute_tsne(features, labels):
     tsne = TSNE(n_components=2, perplexity=20, n_jobs=16, random_state=0, verbose=0).fit_transform(features)
 
     viz_df = pd.DataFrame(data=tsne[:5000])
-    viz_df['Label'] = labels[:5000]
+    viz_df['label'] = labels[:5000]
     colors = ["Shirts", "Watches", "T-Shirts", "Casual Shoes", "Handbags", "Tops", "Kurtas", "Sport Shoes", "Heels",
               "Sunglasses"]
+    viz_df.loc[viz_df['label'] == 0] = "Shirts"
+    viz_df.loc[viz_df['label'] == 1] = "Watches"
+    viz_df.loc[viz_df['label'] == 2] = "T-Shirts"
+    viz_df.loc[viz_df['label'] == 3] = "Casual Shoes"
+    viz_df.loc[viz_df['label'] == 4] = "Handbags"
+    viz_df.loc[viz_df['label'] == 5] = "Tops"
+    viz_df.loc[viz_df['label'] == 6] = "Kurtas"
+    viz_df.loc[viz_df['label'] == 7] = "Sport Shoes"
+    viz_df.loc[viz_df['label'] == 8] = "Heels"
+    viz_df.loc[viz_df['label'] == 9] = "Sunglasses"
+
 
     viz_df.to_csv('tsne.csv')
     plt.subplots(figsize=(8, 5))
-    sns.scatterplot(x=0, y=1, hue=colors, legend='full', hue_order=sorted(viz_df['Label'].unique()),
+    sns.scatterplot(x=0, y=1, hue=viz_df.Label.ToList(), legend='full', hue_order=sorted(viz_df['label'].unique()),
                     palette=sns.color_palette("hls", n_colors=10),
                     alpha=.5,
                     data=viz_df)
