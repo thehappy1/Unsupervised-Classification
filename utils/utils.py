@@ -117,7 +117,7 @@ def compute_tsne(features, labels):
 
     viz_df = pd.DataFrame(data=tsne[:5000])
     viz_df['label'] = labels[:5000]
-    dict = {0 : "Shirts", 1 : "Watches", 2 : "T-Shirts", 3 : "Casual Shoes", 4 : "Handbags", 5 : "Tops", 6 : "Kurtas", 7 : "Sport Shoes", 8 : "Heels",
+    dict = {0 : "Shirts", 1 : "Watches", 2 : "T-Shirts", 3 : "C. Shoes", 4 : "Handbags", 5 : "Tops", 6 : "Kurtas", 7 : "S. Shoes", 8 : "Heels",
             9 : "Sunglasses"}
 
     viz_df['label'] = viz_df["label"].map(dict)
