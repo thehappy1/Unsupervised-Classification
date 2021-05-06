@@ -159,7 +159,7 @@ def hungarian_evaluate(subhead_index, all_predictions, class_names=None,
         confusion_matrix(reordered_preds.cpu().numpy(), targets.cpu().numpy(), 
                             class_names, confusion_matrix_file)
     if tsne:
-        compute_tsne(features, predictions.cpu().numpy())
+        compute_tsne(features, targets.cpu().numpy())
 
     db = metrics.davies_bouldin_score(features, predictions.cpu().numpy())
     s = metrics.silhouette_score(features, predictions.cpu().numpy(), metric='euclidean')
