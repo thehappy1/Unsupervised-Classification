@@ -115,8 +115,8 @@ def compute_tsne(features, labels):
 
     tsne = TSNE(n_components=2, perplexity=20, n_jobs=16, random_state=0, verbose=0).fit_transform(features)
 
-    viz_df = pd.DataFrame(data=tsne[:5000])
-    viz_df['label'] = labels[:5000]
+    viz_df = pd.DataFrame(data=tsne[:10000])
+    viz_df['label'] = labels[:10000]
 
     dict = {0 : "Shirts", 1 : "Watches", 2 : "T-Shirts", 3 : "C. Shoes", 4 : "Handbags", 5 : "Tops", 6 : "Kurtas", 7 : "S. Shoes", 8 : "Heels",
             9 : "Sunglasses"}
