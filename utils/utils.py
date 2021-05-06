@@ -117,6 +117,7 @@ def compute_tsne(features, labels):
 
     viz_df = pd.DataFrame(data=tsne[:10000])
     viz_df['label'] = labels[:10000]
+    print(viz_df['label'].value_counts())
 
     dict = {0 : "Shirts", 1 : "Watches", 2 : "T-Shirts", 3 : "C. Shoes", 4 : "Handbags", 5 : "Tops", 6 : "Kurtas", 7 : "S. Shoes", 8 : "Heels",
             9 : "Sunglasses"}
