@@ -108,16 +108,17 @@ def confusion_matrix(predictions, gt, class_names, output_file=None):
         plt.savefig(output_file, dpi=300, bbox_inches='tight')
     plt.close()
 
-def compute_tsne(features, labels):
+def compute_tsne(features, labels, p):
     from sklearn.manifold import TSNE
     import time
     time_start = time.time()
+    dataset = p["train_db_name"]
 
     tsne = TSNE(n_components=2, perplexity=20, n_jobs=16, random_state=0, verbose=0).fit_transform(features)
 
     viz_df = pd.DataFrame(data=tsne[:5000])
     viz_df['label'] = labels[:5000]
-    print("counties: ", viz_df['label'].value_counts())
+
 
     dict = {0 : "Shirts", 1 : "Watches", 2 : "T-Shirts", 3 : "C. Shoes", 4 : "Handbags", 5 : "Tops", 6 : "Kurtas", 7 : "S. Shoes", 8 : "Heels",
             9 : "Sunglasses"}
@@ -125,7 +126,7 @@ def compute_tsne(features, labels):
 
     viz_df['label'] = viz_df["label"].map(dict)
 
-    viz_df.to_csv('tsne.csv')
+    viz_df.to_csv(dataset+'_tsne.csv')
     plt.subplots(figsize=(14, 7))
     sns.scatterplot(x=0, y=1, hue=viz_df.label.tolist(), legend='full', hue_order=sorted(viz_df['label'].unique()),
                     palette=sns.color_palette("hls", n_colors=10),
@@ -138,6 +139,6 @@ def compute_tsne(features, labels):
     plt.ylabel("")
     plt.xlabel("")
     plt.tight_layout()
-    plt.savefig('tnse.png', dpi=150)
+    plt.savefig(dataset+'_tnse.png', dpi=150)
     plt.clf()
 

@@ -122,7 +122,7 @@ def scan_evaluate(predictions):
 @torch.no_grad()
 def hungarian_evaluate(subhead_index, all_predictions, class_names=None, 
                         compute_purity=True, compute_confusion_matrix=True,
-                        confusion_matrix_file=None, features=None, tsne=None):
+                        confusion_matrix_file=None, features=None, tsne=None, dataset=None):
     # Evaluate model based on hungarian matching between predicted cluster assignment and gt classes.
     # This is computed only for the passed subhead index.
 
@@ -159,7 +159,7 @@ def hungarian_evaluate(subhead_index, all_predictions, class_names=None,
         confusion_matrix(reordered_preds.cpu().numpy(), targets.cpu().numpy(), 
                             class_names, confusion_matrix_file)
     if tsne:
-        compute_tsne(features, targets.cpu().numpy())
+        compute_tsne(features, targets.cpu().numpy(), dataset)
 
     db = metrics.davies_bouldin_score(features, predictions.cpu().numpy())
     s = metrics.silhouette_score(features, predictions.cpu().numpy(), metric='euclidean')
