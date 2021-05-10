@@ -37,7 +37,7 @@ class Fpidataset(Dataset):
         return len(self.df)
 
 
-    # Getter
+
     def __getitem__(self, idx):
         # get imagepath
         img_path = self.df.image_path[idx]

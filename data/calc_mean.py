@@ -1,8 +1,7 @@
 from fpidataset import Fpidataset
-from torch.utils.data import DataLoader
-from fashion import Fashion
 
-dataset = Fashion(train=False, transform=None)
+data = Fpidataset(train=True)
 
-print(dataset.__getitem__(1999))
-
+width, height = data[0]["image"].size
+size = width*height
+print(size)
