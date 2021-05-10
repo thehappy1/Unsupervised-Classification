@@ -145,7 +145,7 @@ def hungarian_evaluate(subhead_index, all_predictions, class_names=None,
     ari = metrics.adjusted_rand_score(targets.cpu().numpy(), predictions.cpu().numpy())
 
     from s_dbw import S_Dbw
-    s_dbw = S_Dbw(features.numpy(), predictions.cpu().numpy())
+    s_dbw = S_Dbw(features.numpy(), reordered_preds)
 
     _, preds_top5 = probs.topk(5, 1, largest=True)
     reordered_preds_top5 = torch.zeros_like(preds_top5)
@@ -159,10 +159,10 @@ def hungarian_evaluate(subhead_index, all_predictions, class_names=None,
         confusion_matrix(reordered_preds.cpu().numpy(), targets.cpu().numpy(), 
                             class_names, confusion_matrix_file)
     if tsne:
-        compute_tsne(features.cpu().numpy(), predictions.cpu().numpy(), dataset)
+        compute_tsne(features.cpu().numpy(), reordered_preds, dataset)
 
-    db = metrics.davies_bouldin_score(features.cpu().numpy(), predictions.cpu().numpy())
-    s = metrics.silhouette_score(features.cpu().numpy(), predictions.cpu().numpy(), metric='euclidean')
+    db = metrics.davies_bouldin_score(features.cpu().numpy(), reordered_preds)
+    s = metrics.silhouette_score(features.cpu().numpy(), reordered_preds, metric='euclidean')
 
     return {'ACC': acc, 'ARI': ari, 'NMI': nmi, 'DB ': db, 'S: ': s, 'S_DBW': s_dbw, 'ACC Top-5': top5, 'hungarian_match': match}
 
