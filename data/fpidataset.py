@@ -28,7 +28,6 @@ class Fpidataset(Dataset):
         if self.train:
             self.df = get_i_items(df,temp,0, 800)
             self.targets =  self.df.targets.tolist()
-            print("list: ", type(self.targets), "items: ", self.targets)
         else:
             self.df = get_i_items(df,temp,800, 1000)
             self.targets = self.df.targets.tolist()
