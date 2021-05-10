@@ -144,6 +144,7 @@ def hungarian_evaluate(subhead_index, all_predictions, class_names=None,
     nmi = metrics.normalized_mutual_info_score(targets.cpu().numpy(), predictions.cpu().numpy())
     ari = metrics.adjusted_rand_score(targets.cpu().numpy(), predictions.cpu().numpy())
     print(reordered_preds)
+    print(targets)
     print(int(reordered_preds==targets).sum())
     from s_dbw import S_Dbw
     s_dbw = S_Dbw(features.numpy(), reordered_preds)
