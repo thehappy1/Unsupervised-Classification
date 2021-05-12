@@ -156,7 +156,8 @@ def hungarian_evaluate(subhead_index, all_predictions, class_names=None,
         confusion_matrix(reordered_preds.cpu().numpy(), targets.cpu().numpy(), 
                             class_names, confusion_matrix_file)
     if tsne:
-        compute_tsne(features.cpu().numpy(), reordered_preds.cpu().numpy(), dataset)
+        #reordered_preds.cpu().numpy()
+        compute_tsne(features.cpu().numpy(), targets.cpu().numpy(), dataset)
 
     from s_dbw import S_Dbw
     s_dbw = S_Dbw(features.numpy(), targets.cpu().numpy())
