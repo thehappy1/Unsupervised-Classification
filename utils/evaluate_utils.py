@@ -122,7 +122,7 @@ def scan_evaluate(predictions):
 @torch.no_grad()
 def hungarian_evaluate(subhead_index, all_predictions, class_names=None, 
                         compute_purity=True, compute_confusion_matrix=True,
-                        confusion_matrix_file=None, features=None, tsne=None, dataset=None):
+                        confusion_matrix_file=None, features=None, tsne=None, dataset=None, full_eval=None):
     # Evaluate model based on hungarian matching between predicted cluster assignment and gt classes.
     # This is computed only for the passed subhead index.
 
@@ -158,11 +158,15 @@ def hungarian_evaluate(subhead_index, all_predictions, class_names=None,
         #reordered_preds.cpu().numpy()
         compute_tsne(features.cpu().numpy(), targets.cpu().numpy(), dataset)
 
-    from s_dbw import S_Dbw
-    s_dbw = S_Dbw(features.numpy(), reordered_preds.cpu().numpy())
-    db = metrics.davies_bouldin_score(features.cpu().numpy(), reordered_preds.cpu().numpy())
-    s = metrics.silhouette_score(features.cpu().numpy(), reordered_preds.cpu().numpy(), metric='euclidean')
-
+    if full_eval:
+        from s_dbw import S_Dbw
+        s_dbw = S_Dbw(features.numpy(), reordered_preds.cpu().numpy())
+        db = metrics.davies_bouldin_score(features.cpu().numpy(), reordered_preds.cpu().numpy())
+        s = metrics.silhouette_score(features.cpu().numpy(), reordered_preds.cpu().numpy(), metric='euclidean')
+    else:
+        s_dbw = "None"
+        db = "None"
+        s = "None"
     return {'ACC': acc, 'ARI': ari, 'NMI': nmi, 'DB ': db, 'S: ': s, 'S_DBW': s_dbw, 'ACC Top-5': top5, 'hungarian_match': match}
 
 

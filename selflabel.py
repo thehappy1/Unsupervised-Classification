@@ -119,7 +119,7 @@ def main():
     clustering_stats = hungarian_evaluate(0, predictions, 
                                 class_names=val_dataset.classes,
                                 compute_confusion_matrix=True,
-                                confusion_matrix_file=os.path.join(p['selflabel_dir'], 'confusion_matrix.png'), features=features, tsne=True, dataset=p)
+                                confusion_matrix_file=os.path.join(p['selflabel_dir'], 'confusion_matrix.png'), features=features, tsne=True, dataset=p, full_eval=True)
     print(clustering_stats)
     torch.save(model.module.state_dict(), p['selflabel_model'])
 
