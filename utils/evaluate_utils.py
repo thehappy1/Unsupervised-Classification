@@ -133,7 +133,6 @@ def hungarian_evaluate(subhead_index, all_predictions, class_names=None,
     probs = head['probabilities'].cuda()
     num_classes = torch.unique(targets).numel()
     num_elems = targets.size(0)
-    print("preds", predictions)
 
     match = _hungarian_match(predictions, targets, preds_k=num_classes, targets_k=num_classes)
     reordered_preds = torch.zeros(num_elems, dtype=predictions.dtype).cuda()
