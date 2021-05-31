@@ -76,6 +76,7 @@ class MNIST(VisionDataset):
 
         if download:
             self.download()
+            self.targets = self.targets.numpy()
 
         if not self._check_exists():
             raise RuntimeError('Dataset not found.' +
@@ -91,7 +92,6 @@ class MNIST(VisionDataset):
         #self.data = self.data.reshape((60000, 28, 28))
         self.data = np.stack((self.data,) * 3, axis=-1)
         print("output: ", self.data.shape)
-        self.targets = self.targets.numpy()
 
     def __getitem__(self, index: int) -> Tuple[Any, Any]:
         """
@@ -174,7 +174,7 @@ class MNIST(VisionDataset):
         return "Split: {}".format("Train" if self.train is True else "Test")
 
 
-class FashionMNIST(MNIST):
+class FashionMNIST(MNIST, test=None):
     """`Fashion-MNIST <https://github.com/zalandoresearch/fashion-mnist>`_ Dataset.
 
     Args:
@@ -190,7 +190,6 @@ class FashionMNIST(MNIST):
         target_transform (callable, optional): A function/transform that takes in the
             target and transforms it.
     """
-
 
     resources = [
         ("http://fashion-mnist.s3-website.eu-central-1.amazonaws.com/train-images-idx3-ubyte.gz",
