@@ -130,7 +130,9 @@ def main():
     model_checkpoint = torch.load(p['scan_model'], map_location='cpu')
     model.module.load_state_dict(model_checkpoint['model'])
     #predictions = get_predictions(p, val_dataloader, model)
+
     predictions, features = get_predictions(p, val_dataloader, model, return_features=True)
+    print("features", features)
     clustering_stats = hungarian_evaluate(0, predictions,
                                           class_names=val_dataset.classes,
                                           compute_confusion_matrix=True,
