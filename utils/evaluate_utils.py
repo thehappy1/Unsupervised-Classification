@@ -160,9 +160,9 @@ def hungarian_evaluate(subhead_index, all_predictions, class_names=None,
         compute_tsne(features.cpu().numpy(), targets.cpu().numpy(), dataset)
 
     from s_dbw import S_Dbw
-    s_dbw = S_Dbw(features.numpy(), targets.cpu().numpy())
-    db = metrics.davies_bouldin_score(features.cpu().numpy(), targets.cpu().numpy())
-    s = metrics.silhouette_score(features.cpu().numpy(), targets.cpu().numpy(), metric='euclidean')
+    s_dbw = S_Dbw(features.numpy(), reordered_preds.cpu().numpy())
+    db = metrics.davies_bouldin_score(features.cpu().numpy(), reordered_preds.cpu().numpy())
+    s = metrics.silhouette_score(features.cpu().numpy(), reordered_preds.cpu().numpy(), metric='euclidean')
 
     return {'ACC': acc, 'ARI': ari, 'NMI': nmi, 'DB ': db, 'S: ': s, 'S_DBW': s_dbw, 'ACC Top-5': top5, 'hungarian_match': match}
 
