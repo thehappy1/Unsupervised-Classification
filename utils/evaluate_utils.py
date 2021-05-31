@@ -133,12 +133,13 @@ def hungarian_evaluate(subhead_index, all_predictions, class_names=None,
     probs = head['probabilities'].cuda()
     num_classes = torch.unique(targets).numel()
     num_elems = targets.size(0)
+    print("preds", predictions)
 
     match = _hungarian_match(predictions, targets, preds_k=num_classes, targets_k=num_classes)
     reordered_preds = torch.zeros(num_elems, dtype=predictions.dtype).cuda()
     for pred_i, target_i in match:
         reordered_preds[predictions == int(pred_i)] = int(target_i)
-
+    print("reordered_preds", reordered_preds)
     # Gather performance metrics
     acc = int((reordered_preds == targets).sum()) / float(num_elems)
     nmi = metrics.normalized_mutual_info_score(targets.cpu().numpy(), predictions.cpu().numpy())
