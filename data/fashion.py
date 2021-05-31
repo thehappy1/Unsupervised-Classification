@@ -174,7 +174,7 @@ class MNIST(VisionDataset):
         return "Split: {}".format("Train" if self.train is True else "Test")
 
 
-class FashionMNIST(MNIST, test=None):
+class FashionMNIST(MNIST):
     """`Fashion-MNIST <https://github.com/zalandoresearch/fashion-mnist>`_ Dataset.
 
     Args:
